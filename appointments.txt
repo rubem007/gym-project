@@ -1,0 +1,164 @@
+git - Code
+Tests
+Jenkins
+SonarQube
+Trivy
+Terraform
+Ansible
+AWS
+
+npm run start:dev
+
+npm i --save class-validator class-transformer
+npm install prisma --save-dev
+npm install prisma @prisma/client
+npx prisma init
+npm i uuid
+
+Run migration:
+    npx prisma migrate dev --name init
+
+Delete all DB and Run migration:
+    npx prisma migrate reset
+
+nest new backoffice-api
+
+nest g resource customer --no-spec
+nest g class customer/models/dto/create-customer.dto --no-spec
+nest g class customer/models/dto/update-customer.dto --no-spec
+
+nest g resource plan --no-spec
+
+nest g s prisma --no-spec
+nest g mo prisma --no-spec
+
+npm i --save @nestjs/config
+npm i --save @nestjs/axios
+npm i @nestjs/swagger
+npm i --save class-validator class-transformer
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
+nest g module auth
+nest g service auth/auth --no-spec
+nest g controller auth/auth --no-spec
+nest g service auth/jwt-strategy/jwt-strategy --no-spec
+nest g guard auth/auth/jwt
+nest g guard auth/roles/role --no-spec
+nest g decorator auth/roles/role
+
+npm i @golevelup/nestjs-rabbitmq
+
+nest g module rabbitmq
+nest g service rabbitmq --no-spec
+
+nest g controller app
+
+npm install date-fns --save
+
+Entry Point
+
+admin@ventus.com
+1root@20
+
+API
+nest new api
+
+nest g resource user --no-spec
+nest g class user/models/dto/create-user.dto --no-spec
+nest g class user/models/dto/update-user.dto --no-spec
+nest g decorator auth/roles/roles
+
+Cron job
+nest new cron-job-microservice
+nest g resource cronJob --no-spec
+
+SMS & Mail
+nest new sms-microservice
+nest g resource sms
+nest g resource mail
+nest g resource whatsapp
+nest g class mail/models/dto/mail.dto --no-spec
+____________________________________________________________
+GIT
+1ª Vez
+git init
+git add README.md
+git commit -m "add README.md"
+git branch -M main
+git remote add origin https://github.com/rubem007/gym-project.git
+git push -u origin main
+
+Outras vezes
+git add . ou git add {nome_arquivo}
+git commit -m "mensagem"
+git push -u origin main ou caso for na branch insira git push -u origin {nome_branch}
+
+Nova branch
+git checkout -b "nome_branch"
+git add -A
+git commit -m "Create auth feature and added insomnia requests"
+git push origin nome_branch
+
+Juntar a branch à main
+git checkout main
+git merge auth
+git push origin main
+
+Deletar uma branch local
+git branch -d {nome_branch} 
+
+_____________________________________________________________________________________
+Jenkins
+access jenkins via ssh
+    ssh -i pub_key.pem azureuser@48.217.66.127
+
+Caso tenha um erro de Load key "jenkins-vm_key (1).pem": Permission denied, faça o seguinte:
+    Rename the Key File
+    Use the icacls command to explicitly set the correct permissions for the key file:
+        icacls "jenkins-vm_key.pem" /inheritance:r
+        icacls "jenkins-vm_key.pem" /grant:r %username%:F
+    Verify Permissions Again:
+        icacls "jenkins-vm_key.pem"
+    Retry SSH Connection:
+        ssh -i "jenkins-vm_key.pem" azureuser@48.217.66.127
+
+Install java
+    sudo apt update 
+    sudo apt install openjdk-17-jdk
+    java -version
+
+Install jenkins
+    https://www.jenkins.io/doc/book/installing/linux/
+    systemctl status jenkins
+
+Install docker
+    https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+    add jenkins on group docker:
+        sudo usermod -aG docker jenkins
+        systemctl restart jenkins
+
+Instal kubectl
+    apt-get install -y apt-transport-https ca-certificates curl gnupg
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    chmod 644 /etc/apt/sources.list.d/kubernetes.list
+    apt-get update
+    apt-get install -y kubectl
+
+Access jenkins
+    48.217.66.127:8080
+
+If you cant access jenkins, go to inbound rules on Network Azure Group in Azure, and create a port rule with Service: Custom
+
+Run this command to view the administrator password
+    cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Configure pipeline on jenkins
+    Add plugins
+        docker
+        docker pipeline
+
+A pipeline no jenkins é criada usando a linguagem Groovy
