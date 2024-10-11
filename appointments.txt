@@ -114,6 +114,8 @@ ssh-keygen -t rsa -b 2048
 dir C:\Users\Rubem\.ssh or ls C:/Users/Rubem/.ssh
 cat C:/Users/Rubem/.ssh/cinemax_key.pub
 
+dir C:\Users\Rubem\Documents\Cursos\curso-nestjs\gym-api\terraform
+
 terraform init
 terraform apply
 terraform fmt - formata o código
@@ -142,7 +144,7 @@ Caso tenha um erro de Load key "jenkins-vm_key (1).pem": Permission denied, faç
 Install java
     sudo apt update 
     sudo apt install openjdk-17-jdk
-    java -version
+    java --version
 
 Install jenkins
     https://www.jenkins.io/doc/book/installing/linux/
@@ -151,7 +153,7 @@ Install jenkins
 Install docker
     https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
     add jenkins on group docker:
-        sudo usermod -aG docker jenkins
+        sudo usermod -aG docker $USER
         systemctl restart jenkins
 
 Instal kubectl
