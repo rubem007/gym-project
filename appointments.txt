@@ -108,6 +108,21 @@ git push origin main
 
 Deletar uma branch local
 git branch -d {nome_branch} 
+_____________________________________________________________________________________
+ssh-keygen -t rsa -b 2048
+    C:\Users\Rubem/.ssh/cinemax_key
+dir C:\Users\Rubem\.ssh or ls C:/Users/Rubem/.ssh
+cat C:/Users/Rubem/.ssh/cinemax_key.pub
+
+terraform init
+terraform apply
+terraform fmt - formata o código
+terraform plan - mostra o plano de execução
+terraform destroy - elimina todo cluster da digital ocean
+terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
+
+acessar o droplet jenkins via ssh
+ssh -i C:/Users/Rubem/.ssh/cinemax_key root@159.223.149.23
 
 _____________________________________________________________________________________
 Jenkins
