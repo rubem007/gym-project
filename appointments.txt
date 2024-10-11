@@ -121,8 +121,8 @@ terraform plan - mostra o plano de execução
 terraform destroy - elimina todo cluster da digital ocean
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
-acessar o droplet jenkins via ssh
-ssh -i C:/Users/Rubem/.ssh/cinemax_key root@159.223.149.23
+Access EC2 
+    ssh -i gym-key-pair ubuntu@34.229.121.86
 
 _____________________________________________________________________________________
 Jenkins
