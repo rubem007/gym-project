@@ -79,20 +79,20 @@ resource "aws_route_table_association" "gym_rt_public_a" {
 }
 
 # 5.1 - Create Route table for private subnet
-# resource "aws_route_table" "gym_rt_private" {
-#   vpc_id = aws_vpc.gym_vpc.id
+resource "aws_route_table" "gym_rt_private" {
+  vpc_id = aws_vpc.gym_vpc.id
 
-#   route {
-#     cidr_block     = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.gym_nat_gtw.id
-#   }
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.gym_nat_gtw.id
+  }
 
-#   tags = {
-#     Name = "gym-rt-private"
-#   }
-# }
+  tags = {
+    Name = "gym-rt-private"
+  }
+}
 
-# resource "aws_route_table_association" "gym_rt_private_a" {
-#   subnet_id      = aws_subnet.gym_subnet_private.id
-#   route_table_id = aws_route_table.gym_rt_private.id
-# }
+resource "aws_route_table_association" "gym_rt_private_a" {
+  subnet_id      = aws_subnet.gym_subnet_private.id
+  route_table_id = aws_route_table.gym_rt_private.id
+}

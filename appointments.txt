@@ -123,8 +123,12 @@ terraform plan - mostra o plano de execução
 terraform destroy - elimina todo cluster da digital ocean
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
-Access EC2 
-    ssh -i gym-key-pair ubuntu@34.229.121.86
+Access EC2
+EC2 API:    ssh -i gym-key-pair ubuntu@34.229.121.86
+EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.158
+
+Copy file from local host to remote host
+    scp -i gym-key-pair ./gym-key-pair ubuntu@34.229.121.86:/home/ubuntu/.ssh/gym-key-pair
 
 _____________________________________________________________________________________
 Jenkins
