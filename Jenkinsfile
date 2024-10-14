@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     dockerapp = docker.build("rubemnascimento81/gym-app:${env.BUILD_ID}",
-                                '-f ./backoffice-api/Dockerfile .')
+                                '-f ./backoffice-api/Dockerfile ./backoffice-api')
 
                 }
             }
@@ -19,8 +19,6 @@ pipeline {
                         docker.push('latest')
                         docker.push("${env.BUILD_ID}")
                     }
-                    
-
                 }
             }
         }
