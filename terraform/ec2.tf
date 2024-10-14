@@ -35,10 +35,28 @@ resource "aws_instance" "ec2_db" {
   }
 }
 
+resource "aws_instance" "ec2_jenkins" {
+  ami           = "ami-0e86e20dae9224db8"
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.gym_subnet_public.id
+  associate_public_ip_address = true
+  vpc_security_group_ids = [ aws_security_group.gym_sg_jenkins.id ]
+  key_name = aws_key_pair.gym_key_pair.key_name
+  user_data = file("./docker-install.sh")
+
+  tags = {
+    Name = "ec2-jenkins"
+  }
+}
+
 output "ip_api" {
   value = aws_instance.ec2_api.public_ip
 }
 
 output "ip_db" {
   value = aws_instance.ec2_db.private_ip
+}
+
+output "ip_jenkins" {
+  value = aws_instance.ec2_jenkins.public_ip
 }

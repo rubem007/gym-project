@@ -1,10 +1,12 @@
 git - Code
 Tests
+Terraform
 Jenkins
 SonarQube
 Trivy
-Terraform
 Ansible
+Kind
+ArgoCD
 AWS
 
 npm run start:dev
@@ -126,24 +128,13 @@ terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource espe
 Access EC2
 EC2 API:    ssh -i gym-key-pair ubuntu@34.229.121.86
 EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.158
+EC2 Jenkins:     ssh -i gym-key-pair ubuntu@54.234.206.184
 
 Copy file from local host to remote host
     scp -i gym-key-pair ./gym-key-pair ubuntu@34.229.121.86:/home/ubuntu/.ssh/gym-key-pair
 
 _____________________________________________________________________________________
 Jenkins
-access jenkins via ssh
-    ssh -i pub_key.pem azureuser@48.217.66.127
-
-Caso tenha um erro de Load key "jenkins-vm_key (1).pem": Permission denied, faça o seguinte:
-    Rename the Key File
-    Use the icacls command to explicitly set the correct permissions for the key file:
-        icacls "jenkins-vm_key.pem" /inheritance:r
-        icacls "jenkins-vm_key.pem" /grant:r %username%:F
-    Verify Permissions Again:
-        icacls "jenkins-vm_key.pem"
-    Retry SSH Connection:
-        ssh -i "jenkins-vm_key.pem" azureuser@48.217.66.127
 
 Install java
     sudo apt update 
@@ -170,9 +161,7 @@ Instal kubectl
     apt-get install -y kubectl
 
 Access jenkins
-    48.217.66.127:8080
-
-If you cant access jenkins, go to inbound rules on Network Azure Group in Azure, and create a port rule with Service: Custom
+    54.234.206.184:8080
 
 Run this command to view the administrator password
     cat /var/lib/jenkins/secrets/initialAdminPassword

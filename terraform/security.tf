@@ -100,6 +100,15 @@ resource "aws_network_acl" "gym_nacl_public" {
 
   ingress {
     protocol   = "tcp"
+    rule_no    = 101
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 8080
+    to_port    = 8080
+  }
+
+  ingress {
+    protocol   = "tcp"
     rule_no    = 110
     action     = "allow"
     cidr_block = "0.0.0.0/0"
