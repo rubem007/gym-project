@@ -57,5 +57,5 @@ model CustomerPlan {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  @@map("cutomers_plans")
+  @@map("customers_plans")
 }

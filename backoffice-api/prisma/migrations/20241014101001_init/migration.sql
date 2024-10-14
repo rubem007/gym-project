@@ -1,8 +1,8 @@
 -- CreateTable
-CREATE TABLE `cutomers` (
+CREATE TABLE `customers` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `bi` VARCHAR(191) NOT NULL,
+    `bi` VARCHAR(191) NULL,
     `genre` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `plans` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `cutomers_plans` (
+CREATE TABLE `customers_plans` (
     `id` VARCHAR(191) NOT NULL,
     `customerId` VARCHAR(191) NOT NULL,
     `planId` INTEGER NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `cutomers_plans` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `cutomers_plans` ADD CONSTRAINT `cutomers_plans_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `cutomers`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `customers_plans` ADD CONSTRAINT `customers_plans_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `customers`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `cutomers_plans` ADD CONSTRAINT `cutomers_plans_planId_fkey` FOREIGN KEY (`planId`) REFERENCES `plans`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `customers_plans` ADD CONSTRAINT `customers_plans_planId_fkey` FOREIGN KEY (`planId`) REFERENCES `plans`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
