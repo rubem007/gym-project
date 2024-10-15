@@ -122,7 +122,7 @@ terraform init
 terraform apply
 terraform fmt - formata o código
 terraform plan - mostra o plano de execução
-terraform destroy - elimina todo cluster da digital ocean
+terraform destroy - elimina todos os resources
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
 Access EC2
@@ -148,7 +148,7 @@ Install jenkins
 Install docker
     https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
     add jenkins on group docker:
-        sudo usermod -aG docker $USER
+        sudo usermod -aG docker jenkins
         systemctl restart jenkins
 
 Instal kubectl
