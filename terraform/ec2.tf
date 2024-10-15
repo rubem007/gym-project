@@ -4,8 +4,8 @@
 # }
 
 resource "aws_key_pair" "gym_key_pair" {
-  key_name   = "gym-key-pair"
-  public_key = file("gym-key-pair.pub")
+  key_name   = "id_rsa"
+  public_key = file("~/.ssh/id_rsa.pub")
 }
 
 resource "aws_instance" "ec2_api" {
@@ -28,7 +28,7 @@ resource "aws_instance" "ec2_db" {
   subnet_id = aws_subnet.gym_subnet_private.id
   vpc_security_group_ids = [ aws_security_group.gym_sg_db.id ]
   key_name = aws_key_pair.gym_key_pair.key_name
-  user_data = file("./docker-install.sh")
+  #user_data = file("./docker-install.sh")
 
   tags = {
     Name = "ec2-db"
@@ -42,7 +42,7 @@ resource "aws_instance" "ec2_jenkins" {
   associate_public_ip_address = true
   vpc_security_group_ids = [ aws_security_group.gym_sg_jenkins.id ]
   key_name = aws_key_pair.gym_key_pair.key_name
-  user_data = file("./docker-install.sh")
+  #user_data = file("./docker-install.sh")
 
   tags = {
     Name = "ec2-jenkins"

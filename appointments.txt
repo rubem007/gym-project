@@ -126,7 +126,7 @@ terraform destroy - elimina todos os resources
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
 Access EC2
-EC2 API:    ssh -i gym-key-pair ubuntu@34.229.121.86
+EC2 API:    ssh ubuntu@54.92.159.200
 EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.158
 EC2 Jenkins:     ssh -i gym-key-pair ubuntu@54.234.206.184
 
@@ -172,3 +172,50 @@ Configure pipeline on jenkins
         docker pipeline
 
 A pipeline no jenkins é criada usando a linguagem Groovy
+________________________________________________________________________________________________
+Ansible
+
+Comandos
+ansible localhost -m ping 
+
+ansible all -i '54.92.159.200,' -m ping --private-key=~/.ssh/id_rsa -u root
+
+ansible all -i hosts --list-hosts - lista todos os hosts que serão utilizados
+
+ansible all -i hosts -m ping - ping todas as máquinas
+ansible ping -i hosts -m ping - ping apenas nas máquinas que pertencem ao grupo ping
+
+ansible all -i hosts -m reboot - reinicia todas as maquinas
+ansible ping -i hosts -m reboot - reinicia as maquinas que estão no grupo ping
+
+ansible-playbook -i hosts playbook.yaml - executa o arquivo yaml playbook
+
+ansible-playbook -i hosts playbook.yaml --ask-become-pass - executa o arquivo yaml playbook. Usa-se quando o remote_user não é o root
+
+
+Criar user no linux
+ useradd rdn007
+ usermod -a -G sudo rdn007
+ passwd rdn007
+
+Entrar no CLI do container control
+docker exec -it control bash
+
+acessar droplet via ssh
+ssh -i C:/Users/Rubem/.ssh/cinemax_key root@159.223.149.23
+
+acessar container(ubuntu) via ssh
+ssh root@node1
+
+Copiar a chave ssh para outro container(Ubuntu)
+ssh-copy-id root@node1
+
+Create a ssh key
+ssh-keygen -t rsa -b 2048
+
+Run SSH service
+service ssh start
+
+Ansible ad hoc
+ssh-agent bash
+ssh-add ~/.ssh/id_rsa
