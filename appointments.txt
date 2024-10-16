@@ -126,9 +126,9 @@ terraform destroy - elimina todos os resources
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
 Access EC2
-EC2 API:    ssh ubuntu@54.92.159.200
-EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.158
-EC2 Jenkins:     ssh -i gym-key-pair ubuntu@54.234.206.184
+EC2 API:    ssh ubuntu@3.239.118.82
+EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.117
+EC2 Jenkins:     ssh ubuntu@3.214.217.46
 
 Copy file from local host to remote host
     scp -i gym-key-pair ./gym-key-pair ubuntu@34.229.121.86:/home/ubuntu/.ssh/gym-key-pair
@@ -178,12 +178,14 @@ Ansible
 Comandos
 ansible localhost -m ping 
 
-ansible all -i '54.92.159.200,' -m ping --private-key=~/.ssh/id_rsa -u root
+ansible all -i '3.239.118.82,' -m ping --private-key=~/.ssh/id_rsa -u root
 
 ansible all -i hosts --list-hosts - lista todos os hosts que serão utilizados
 
 ansible all -i hosts -m ping - ping todas as máquinas
 ansible ping -i hosts -m ping - ping apenas nas máquinas que pertencem ao grupo ping
+
+ansible all -i hosts -m ping -e "ansible_facts_gathering=false" - ping todas as máquinas
 
 ansible all -i hosts -m reboot - reinicia todas as maquinas
 ansible ping -i hosts -m reboot - reinicia as maquinas que estão no grupo ping
@@ -192,6 +194,9 @@ ansible-playbook -i hosts playbook.yaml - executa o arquivo yaml playbook
 
 ansible-playbook -i hosts playbook.yaml --ask-become-pass - executa o arquivo yaml playbook. Usa-se quando o remote_user não é o root
 
+
+ansible-playbook -i hosts install_docker.yml
+ansible-playbook -i hosts install_kubectl.yml
 
 Criar user no linux
  useradd rdn007
