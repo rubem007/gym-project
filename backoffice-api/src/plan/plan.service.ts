@@ -5,7 +5,7 @@ import { UpdatePlanDto } from './dto/update-plan.dto';
 @Injectable()
 export class PlanService {
   create(createPlanDto: CreatePlanDto) {
-    return 'This action adds a new plan';
+    return 'This action adds a new pla';
   }
 
   findAll() {
