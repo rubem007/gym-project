@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = 'rubemnascimento81/gym-app'
+    }
+
     stages {
         stage('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build("rubemnascimento81/gym-app:${env.BUILD_ID}",
+                    dockerapp = docker.build("${IMAGE_NAME}:${env.BUILD_ID}",
                                 '-f ./backoffice-api/Dockerfile ./backoffice-api')
 
                 }
@@ -15,9 +19,10 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
+                    echo 'Pushing Docker Image...'
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        docker.push('latest')
-                        docker.push("${env.BUILD_ID}")
+                        dockerapp.push("${env.BUILD_ID}")
+                        dockerapp.push('latest')
                     }
                 }
             }
