@@ -13,5 +13,5 @@ echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docke
 # Instalação do Docker
 sudo apt-get update && sudo apt-get install --yes docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
 
-# Adiciona o usuário atual ao grupo "docker" (opcional)
+# Adiciona o usuário atual ao grupo "docker" (optional)
 sudo usermod -aG docker ${USER}
