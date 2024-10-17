@@ -126,12 +126,12 @@ terraform destroy - elimina todos os resources
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
 Access EC2
-EC2 API:    ssh ubuntu@3.239.118.82
-EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.117
-EC2 Jenkins:     ssh ubuntu@3.214.217.46
+EC2 API:    ssh ubuntu@44.200.193.130
+EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.73
+EC2 Jenkins:     ssh ubuntu@100.27.235.46
 
 Copy file from local host to remote host
-    scp -i gym-key-pair ./gym-key-pair ubuntu@34.229.121.86:/home/ubuntu/.ssh/gym-key-pair
+    scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa
 
 _____________________________________________________________________________________
 Jenkins
@@ -195,7 +195,7 @@ ansible-playbook -i hosts playbook.yaml - executa o arquivo yaml playbook
 ansible-playbook -i hosts playbook.yaml --ask-become-pass - executa o arquivo yaml playbook. Usa-se quando o remote_user não é o root
 
 
-ansible-playbook -i hosts install_docker.yml
+ansible-playbook -i hosts install_jenkins.yml install_docker.yml install_kubectl.yml
 ansible-playbook -i hosts install_kubectl.yml
 
 Criar user no linux

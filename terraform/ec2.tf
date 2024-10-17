@@ -37,7 +37,7 @@ resource "aws_instance" "ec2_db" {
 
 resource "aws_instance" "ec2_jenkins" {
   ami           = "ami-0e86e20dae9224db8"
-  instance_type = "t2.micro"
+  instance_type = "t3.medium"
   subnet_id = aws_subnet.gym_subnet_public.id
   associate_public_ip_address = true
   vpc_security_group_ids = [ aws_security_group.gym_sg_jenkins.id ]
