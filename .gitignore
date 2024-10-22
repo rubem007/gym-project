@@ -2,3 +2,4 @@
 db.txt
 .docker
 /terraform/.terraform
+/terraform-k8s
