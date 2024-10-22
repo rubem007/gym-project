@@ -120,15 +120,16 @@ dir C:\Users\Rubem\Documents\Cursos\curso-nestjs\gym-api\terraform
 
 terraform init
 terraform apply
+terraform apply -auto-approve — Apply changes without having to interactively type ‘yes’ to the plan.
 terraform fmt - formata o código
 terraform plan - mostra o plano de execução
 terraform destroy - elimina todos os resources
 terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
 
 Access EC2
-EC2 API:    ssh ubuntu@44.200.193.130
-EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.73
-EC2 Jenkins:     ssh ubuntu@100.27.235.46
+EC2 API:    ssh ubuntu@54.90.42.60
+EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.59
+EC2 Jenkins:     ssh ubuntu@54.87.209.51
 
 Copy file from local host to remote host
     scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa

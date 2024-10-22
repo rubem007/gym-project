@@ -219,25 +219,25 @@ resource "aws_security_group" "gym_sg_db" {
   vpc_id      = aws_vpc.gym_vpc.id
 
   ingress {
-    description      = "Mysql Access"
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    security_groups = [ aws_security_group.gym_sg_api.id ]
+    description     = "Mysql Access"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.gym_sg_api.id]
     /* cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"] */
   }
 
   ingress {
-    description      = "SSH Access"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = [ aws_vpc.gym_vpc.cidr_block ]
+    description = "SSH Access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.gym_vpc.cidr_block]
   }
 
   egress {
-    description = "HTTP Access"
+    description      = "HTTP Access"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
@@ -246,7 +246,7 @@ resource "aws_security_group" "gym_sg_db" {
   }
 
   egress {
-    description = "HTTPs Access"
+    description      = "HTTPs Access"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
@@ -255,7 +255,7 @@ resource "aws_security_group" "gym_sg_db" {
   }
 
   egress {
-    description = "DNS Access"
+    description      = "DNS Access"
     from_port        = 53
     to_port          = 53
     protocol         = "tcp"
@@ -264,7 +264,7 @@ resource "aws_security_group" "gym_sg_db" {
   }
 
   egress {
-    description = "DNS Access"
+    description      = "DNS Access"
     from_port        = 53
     to_port          = 53
     protocol         = "udp"
@@ -354,14 +354,14 @@ resource "aws_network_acl" "gym_nacl_private" {
     to_port    = 53
   }
 
-#   egress {
-#     protocol   = "tcp"
-#     rule_no    = 150
-#     action     = "allow"
-#     cidr_block = "0.0.0.0/0"
-#     from_port  = 22
-#     to_port    = 22
-#   }
+  #   egress {
+  #     protocol   = "tcp"
+  #     rule_no    = 150
+  #     action     = "allow"
+  #     cidr_block = "0.0.0.0/0"
+  #     from_port  = 22
+  #     to_port    = 22
+  #   }
 
   tags = {
     Name = "gym-nacl-private"

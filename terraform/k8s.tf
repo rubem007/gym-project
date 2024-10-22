@@ -26,11 +26,11 @@ module "vpc" {
 # EKS Cluster
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-	version = "20.8.5"
+  version         = "20.8.5"
   cluster_name    = "eks-cluster"
   cluster_version = "1.29"
 
-  #cluster_endpoint_public_access           = true #Depois elimina
+  cluster_endpoint_public_access           = true
   enable_cluster_creator_admin_permissions = true
 
   cluster_addons = {
@@ -57,9 +57,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     eks_nodes = {
-      desired_capacity = 2
-      max_size         = 3
-      min_size         = 2
+      desired_capacity = 4
+      max_size         = 5
+      min_size         = 3
     }
   }
 }
