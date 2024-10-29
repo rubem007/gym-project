@@ -2,12 +2,13 @@ git - Code
 Tests
 Terraform
 Jenkins
-SonarQube
-Trivy
 Ansible
 Kind
 ArgoCD
+
 AWS
+SonarQube
+Trivy
 
 npm run start:dev
 
@@ -110,6 +111,22 @@ git push origin main
 
 Deletar uma branch local
 git branch -d {nome_branch} 
+_____________________________________________________________________________________
+AWS commands
+  aws configure list
+  aws eks --region us-east-1 update-kubeconfig --name fullcycle-cursofc
+
+  aws cloudformation create-stack --stack-name eks-net-gym --template-url https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-private-subnets.yaml
+
+  aws cloudformation delete-stack --stack-name eks-net-arch
+
+  aws cloudformation describe-stacks --stack-name eks-net-arch
+
+security group vpc
+    eks-net-arch-ControlPlaneSecurityGroup-Ibmh7v7Sy1qT - sg-09f41109affba018d
+    default - sg-0cc84d2912e6189b0
+EKS SG
+    eks-cluster-sg-eks-gym-1680441221 - sg-03bc61b2135d56177
 _____________________________________________________________________________________
 ssh-keygen -t rsa -b 2048
     C:\Users\Rubem/.ssh/cinemax_key
@@ -225,3 +242,12 @@ service ssh start
 Ansible ad hoc
 ssh-agent bash
 ssh-add ~/.ssh/id_rsa
+________________________________________________________________________________________________
+kubectl
+    kubectl get all
+    kubectl create deploy nginx --image=nginx
+    kubectl get po
+    kubectl port-forward pod/nginx-676b6c5bbc-kx86j 8181:80
+________________________________________________________________________________________________
+Sonarqube
+    sudo docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
