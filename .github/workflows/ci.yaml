@@ -10,7 +10,7 @@ jobs:
   check-application:
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
+      security-events: write #permissao de escrita no security tab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,13 +55,14 @@ jobs:
             rubemnascimento81/gym-app:latest
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: rubemnascimento81/gym-app:${{ github.sha }}
-          format: "sarif"
+          format: "template"
           output: "trivy-results.sarif"
-          exit-code: 0
-          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH,MEDIUM,LOW
 
       - name: Upload Trivy Scan Results to Github Security Tab
         uses: github/codeql-action/upload-sarif@v3
