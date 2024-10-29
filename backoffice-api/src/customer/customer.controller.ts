@@ -16,12 +16,12 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @Post()
+  @Post('customer')
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.customerService.create(createCustomerDto);
   }
 
-  @Get()
+  @Get('customers')
   findAll(@Query('page') page: string, @Query('limit') limit: string) {
     const pageNumber = parseInt(page) || 1; // Default to page 1
     const limitNumber = parseInt(limit) || 10; // Default to 10 records per page
