@@ -15,7 +15,6 @@ services:
   #   ports:
   #     - 3000:3000
   #   environment:
-  #     - DATABASE_URL=mysql://root:rdn007@mysql:3306/gym_db?schema=public
   #   volumes:
   #     - ./backoffice-api:/usr/src/app
     
@@ -27,9 +26,7 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=rdn007
       - MYSQL_DATABASE=gym_db
       - MYSQL_USER=rdn
-      - MYSQL_PASSWORD=rdntech
     volumes:
       - ./mysql_data:/var/lib/mysql
