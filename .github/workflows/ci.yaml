@@ -46,13 +46,13 @@ jobs:
           file: ./backoffice-api/Dockerfile
           push: true
           tags: |
-            rubemnascimento81/gym-app-prod:${{ github.sha }}
-            rubemnascimento81/gym-app-prod:latest
+            rubemnascimento81/gym-app:${{ github.sha }}
+            rubemnascimento81/gym-app:latest
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: rubemnascimento81/gym-app-prod:${{ github.sha }}
+          image-ref: rubemnascimento81/gym-app:${{ github.sha }}
           format: 'sarif'
           output: 'trivy-results.sarif'
           exit-code: 0
