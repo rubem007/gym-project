@@ -55,10 +55,10 @@ jobs:
             rubemnascimento81/gym-app:latest
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.9.2
         with:
           image-ref: rubemnascimento81/gym-app:${{ github.sha }}
-          format: "template"
+          format: "sarif"
           output: "trivy-results.sarif"
           vuln-type: 'os,library'
           exit-code: '1'
