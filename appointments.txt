@@ -251,3 +251,13 @@ kubectl
 ________________________________________________________________________________________________
 Sonarqube
     sudo docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+________________________________________________________________________________________________
+Trivy
+  trivy fs . -> scan the current directory
+  trivy repo url-repository -> scan the repository
+  trivy fs --scanners misconfig . -> scan the configuration problem (like dockerfile, terraform)
+  trivy image gym-app:v1 -> scan the image
+  trivy image --scanners vuln gym-app:v1
+
+
+  sudo docker build -t gym-app:v1 --target production .

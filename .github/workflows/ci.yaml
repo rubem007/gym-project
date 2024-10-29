@@ -1,20 +1,77 @@
-name: ci-sonarcloud
+name: ci-workflow
 on:
   pull_request:
     branches:
       - dev
 
 jobs:
-  run-ci:
+  check-application:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          go-version: 1.15
-      - run: go test -coverprofile=coverage.out
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+
+      - name: Build
+        run: npm run build
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backoffice-api
+          file: ./backoffice-api/Dockerfile
+          push: true
+          tags: |
+            rubemnascimento81/gym-app-prod:${{ github.sha }}
+            rubemnascimento81/gym-app-prod:latest
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: rubemnascimento81/gym-app-prod:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: 0
+          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+      
+      - name: Upload Trivy Scan Results to Github Security Tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+# jobs:
+#   run-ci:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-go@v2
+#         with:
+#           go-version: 1.15
+#       - run: go test -coverprofile=coverage.out
+#       - name: SonarCloud Scan
+#         uses: SonarSource/sonarcloud-github-action@master
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
