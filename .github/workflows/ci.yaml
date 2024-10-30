@@ -30,6 +30,10 @@ jobs:
       - name: Run end-to-end tests
         run: npm run test:e2e
         working-directory: ./backoffice-api
+      
+      - name: Run tests units
+        run: npm run test:cov
+        working-directory: ./backoffice-api
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
