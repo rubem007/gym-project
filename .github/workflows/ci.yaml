@@ -114,7 +114,7 @@ jobs:
       #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.9.2
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: rubemnascimento81/gym-app:latest
           format: "sarif"
