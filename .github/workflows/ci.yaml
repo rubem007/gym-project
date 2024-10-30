@@ -98,6 +98,8 @@ jobs:
     #needs: [config-scan]
     permissions:
       security-events: write # write permission on security tab
+    outputs:
+      sarif-id: ${{ steps.upload-sarif.outputs.sarif-id }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -112,6 +114,10 @@ jobs:
           severity: CRITICAL,HIGH,MEDIUM
       
       - name: Upload Trivy Scan Results to Github Security Tab
+        id: upload-sarif  # Adiciona um ID a essa etapa
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "trivy-results.sarif"
+
+      - name: Display SARIF ID
+        run: echo "The SARIF ID is ${{ steps.upload-sarif.outputs.sarif-id }}"
