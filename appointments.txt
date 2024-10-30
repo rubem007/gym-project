@@ -116,6 +116,7 @@ git pull origin ci
 
 git branch --list
 git branch -d ci - elimina a branch localmente
+git push origin --delete ci - eliminar branch remota
 _____________________________________________________________________________________
 AWS commands
   aws configure list
