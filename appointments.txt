@@ -111,6 +111,8 @@ git push origin main
 
 Deletar uma branch local
 git branch -d {nome_branch} 
+
+git pull origin ci
 _____________________________________________________________________________________
 AWS commands
   aws configure list
