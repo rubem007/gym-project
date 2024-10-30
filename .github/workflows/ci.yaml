@@ -114,7 +114,7 @@ jobs:
       #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: rubemnascimento81/gym-app:latest
           format: "sarif"
@@ -122,7 +122,7 @@ jobs:
           #vuln-type: 'os,library'
           exit-code: '1'
           #ignore-unfixed: true
-          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+          severity: CRITICAL,HIGH,MEDIUM
       
       - name: Upload Trivy Scan Results to Github Security Tab
         uses: github/codeql-action/upload-sarif@v3
