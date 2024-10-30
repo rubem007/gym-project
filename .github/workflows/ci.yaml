@@ -105,7 +105,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.9.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: rubemnascimento81/gym-app:latest
           format: "sarif"
