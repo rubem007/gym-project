@@ -7,8 +7,6 @@ on:
   
   workflow_dispatch:
 
-  workflow_dispatch:
-
 jobs:
   check-application:
     runs-on: ubuntu-latest
