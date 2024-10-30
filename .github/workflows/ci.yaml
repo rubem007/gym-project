@@ -12,6 +12,8 @@ on:
 jobs:
   config-scan:
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write # write permission on security tab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -97,6 +99,20 @@ jobs:
     permissions:
       security-events: write # write permission on security tab
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Trivy DB
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/trivy
+          key: ${{ runner.os }}-trivy-db
+          restore-keys: |
+            ${{ runner.os }}-trivy-db
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
