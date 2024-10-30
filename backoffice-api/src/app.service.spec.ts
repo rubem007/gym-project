@@ -1,8 +1,7 @@
-// App.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppService } from './app.service';
 
-describe('appService', () => {
+describe('AppService', () => {
   let service: AppService;
 
   beforeEach(async () => {
@@ -17,8 +16,15 @@ describe('appService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return an array of Apps', () => {
+  it('should return an array of users', () => {
     const result = service.findAll();
-    expect(result).toEqual([{ id: 1, name: 'App 1' }]);
+    expect(result).toEqual([{ id: 1, name: 'User 1' }]);
+  });
+
+  it('should return an empty array if no users are present', () => {
+    // Simulando um cenário onde não há usuários
+    service['users'] = [];
+    const result = service.findAll();
+    expect(result).toEqual([]);
   });
 });
