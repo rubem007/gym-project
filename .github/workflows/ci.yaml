@@ -1,8 +1,11 @@
 name: ci-workflow
+
 on:
   pull_request:
     branches:
       - dev
+  
+  workflow_dispatch:
 
   workflow_dispatch:
 
@@ -10,7 +13,7 @@ jobs:
   check-application:
     runs-on: ubuntu-latest
     permissions:
-      security-events: write #permissao de escrita no security tab
+      security-events: write #permissão de escrita no security tab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,6 +67,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.9.2
         with:
           image-ref: rubemnascimento81/gym-app:${{ github.sha }}
+
           format: "sarif"
           output: "trivy-results.sarif"
           #vuln-type: 'os,library'
@@ -71,6 +75,12 @@ jobs:
           ignore-unfixed: true
           severity: CRITICAL,HIGH,MEDIUM,LOW
 
+
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: 0
+          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+      
       - name: Upload Trivy Scan Results to Github Security Tab
         uses: github/codeql-action/upload-sarif@v3
         with:
