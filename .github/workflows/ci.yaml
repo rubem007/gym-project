@@ -82,6 +82,9 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "trivy-results.sarif"
+
+      - name: List files for debugging
+        run: ls -al
 # jobs:
 #   run-ci:
 #     runs-on: ubuntu-latest
