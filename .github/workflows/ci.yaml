@@ -103,7 +103,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cache Trivy DB
-        uses: actions/cache@v3
+        uses: actions/cache@v4.1.2
         with:
           path: ~/.cache/trivy
           key: ${{ runner.os }}-trivy-db
