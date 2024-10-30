@@ -113,6 +113,9 @@ Deletar uma branch local
 git branch -d {nome_branch} 
 
 git pull origin ci
+
+git branch --list
+git branch -d ci - elimina a branch localmente
 _____________________________________________________________________________________
 AWS commands
   aws configure list

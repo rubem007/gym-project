@@ -1,9 +1,11 @@
 name: ci-workflow
 
 on:
-  pull_request:
+  push:
     branches:
       - dev
+  pull_request:
+   types: [opened, synchronize, reopened]
   
   workflow_dispatch:
 
