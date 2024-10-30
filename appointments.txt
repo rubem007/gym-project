@@ -263,7 +263,7 @@ Trivy
   trivy repo url-repository -> scan the repository
   trivy fs --scanners misconfig . -> scan the configuration problem (like dockerfile, terraform)
   trivy image gym-app:v1 -> scan the image
-  trivy image --scanners vuln gym-app:v1
+  trivy image --scanners vuln rubemnascimento81/gym-app:latest
 
 
   sudo docker build -t gym-app:v1 --target production .
