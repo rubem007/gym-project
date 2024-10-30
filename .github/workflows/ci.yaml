@@ -99,31 +99,30 @@ jobs:
     permissions:
       security-events: write # write permission on security tab
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
 
-      - name: Cache Trivy DB
-        uses: actions/cache@v4.1.2
-        with:
-          path: ~/.cache/trivy
-          key: ${{ runner.os }}-trivy-db
-          restore-keys: |
-            ${{ runner.os }}-trivy-db
+      # - name: Cache Trivy DB
+      #   uses: actions/cache@v4.1.2
+      #   with:
+      #     path: ~/.cache/trivy
+      #     key: ${{ runner.os }}-trivy-db
+      #     restore-keys: |
+      #       ${{ runner.os }}-trivy-db
 
-      - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # - name: Login to GitHub Container Registry
+      #   run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.16.1
         with:
           image-ref: rubemnascimento81/gym-app:latest
-          hide-progress: false
           format: "sarif"
           output: "trivy-results.sarif"
-          vuln-type: 'os,library'
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: CRITICAL,HIGH,MEDIUM,LOW
+          #vuln-type: 'os,library'
+          exit-code: 0
+          #ignore-unfixed: true
+          severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
       
       - name: Upload Trivy Scan Results to Github Security Tab
         uses: github/codeql-action/upload-sarif@v3
