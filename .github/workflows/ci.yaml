@@ -110,8 +110,8 @@ jobs:
           image-ref: rubemnascimento81/gym-app:latest
           format: "sarif"
           output: "trivy-results.sarif"
-          exit-code: 0
-          severity: CRITICAL,HIGH,MEDIUM
+          exit-code: 0 # se estiver 0, ele não interrompe a pipeline. Se estiver 1, interrompe
+          severity: CRITICAL,HIGH,MEDIUM,LOW
       
       - name: Upload Trivy Scan Results to Github Security Tab
         id: upload-sarif  # Adiciona um ID a essa etapa
