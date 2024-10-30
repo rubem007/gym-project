@@ -103,7 +103,7 @@ jobs:
           image-ref: rubemnascimento81/gym-app:${{ github.sha }}
           format: "sarif"
           output: "trivy-results.sarif"
-          #vuln-type: 'os,library'
+          vuln-type: 'os,library'
           exit-code: '1'
           ignore-unfixed: true
           severity: CRITICAL,HIGH,MEDIUM,LOW
