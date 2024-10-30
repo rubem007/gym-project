@@ -13,7 +13,7 @@ jobs:
   check-application:
     runs-on: ubuntu-latest
     permissions:
-      security-events: write #permissão de escrita no security tab
+      security-events: write # write permission on security tab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
