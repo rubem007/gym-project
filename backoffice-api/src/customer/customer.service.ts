@@ -1,11 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma, Customer } from '@prisma/client';
-import { createCustomError } from 'src/common/utils/respose-handler';
+import { createCustomError } from 'src/common/utils/response-handler';
 
 @Injectable()
 export class CustomerService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.CustomerCreateInput): Promise<Customer> {
     return this.prisma.customer.create({
