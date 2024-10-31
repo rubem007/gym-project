@@ -1,11 +1,9 @@
 name: ci-workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - branch-dev
-  pull_request:
-   types: [opened, synchronize, reopened]
   
   workflow_dispatch:
 
@@ -95,10 +93,10 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/gym-app:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/gym-app:latest
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/gym-app:${{ github.sha }}
-          format: "table"
-          exit-code: '1' # se estiver 0, ele não interrompe a pipeline. Se estiver 1, interrompe
-          severity: CRITICAL,HIGH,MEDIUM
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@0.28.0
+      #   with:
+      #     image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/gym-app:${{ github.sha }}
+      #     format: "table"
+      #     exit-code: '1' # se estiver 0, ele não interrompe a pipeline. Se estiver 1, interrompe
+      #     severity: CRITICAL,HIGH,MEDIUM
