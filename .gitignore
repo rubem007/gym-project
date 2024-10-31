@@ -3,6 +3,7 @@ db.txt
 .docker
 /terraform/.terraform
 /terraform-k8s
+/k8s
 
 .scannerwork
 coverage.out
