@@ -9,6 +9,26 @@ describe('CustomerService', () => {
   let service: CustomerService;
   let prismaService: PrismaService;
 
+  const mockCustomer: Customer = {
+    id: '1',
+    name: 'John Doe',
+    phone: '924390912',
+    bi: '123456789',
+    genre: 'male',
+    address: '123 Main St',
+    email: 'john@example.com',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  const mockCustomerData: Prisma.CustomerCreateInput = {
+    name: 'John Doe',
+    phone: '924390912',
+  };
+
+  const mockNotFoundError = (id: string) =>
+    createCustomError(`Customer with ID ${id} not found`, HttpStatus.NOT_FOUND);
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -35,48 +55,19 @@ describe('CustomerService', () => {
 
   describe('create', () => {
     it('should create a customer successfully', async () => {
-      const customerData: Prisma.CustomerCreateInput = {
-        name: 'John Doe',
-        phone: '924390912',
-      };
-
-      const createdCustomer: Customer = {
-        id: '1',
-        name: 'John Doe',
-        phone: '924390912',
-        bi: '123456789',
-        genre: 'male',
-        address: '123 Main St',
-        email: 'john@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
       jest
         .spyOn(prismaService.customer, 'create')
-        .mockResolvedValue(createdCustomer);
+        .mockResolvedValue(mockCustomer);
 
-      await expect(service.create(customerData)).resolves.toEqual(
-        createdCustomer,
+      await expect(service.create(mockCustomerData)).resolves.toEqual(
+        mockCustomer,
       );
     });
   });
 
   describe('findAll', () => {
     it('should return paginated customers', async () => {
-      const customers: Customer[] = [
-        {
-          id: '1',
-          name: 'John Doe',
-          phone: '924390912',
-          bi: '123456789',
-          genre: 'male',
-          address: '123 Main St',
-          email: 'john@example.com',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ];
+      const customers: Customer[] = [mockCustomer];
       const totalCount = 10;
       const pageNumber = 1;
       const limitNumber = 10;
@@ -99,139 +90,71 @@ describe('CustomerService', () => {
 
   describe('findOne', () => {
     it('should return a customer by ID', async () => {
-      const customer: Customer = {
-        id: '1',
-        name: 'John Doe',
-        phone: '924390912',
-        bi: '123456789',
-        genre: 'male',
-        address: '123 Main St',
-        email: 'john@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
       jest
         .spyOn(prismaService.customer, 'findUniqueOrThrow')
-        .mockResolvedValue(customer);
+        .mockResolvedValue(mockCustomer);
 
-      await expect(service.findOne({ id: '1' })).resolves.toEqual(customer);
+      await expect(service.findOne({ id: '1' })).resolves.toEqual(mockCustomer);
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      const nonExistentId = { id: '1' };
-
-      // Simula o lançamento de uma exceção
       jest
         .spyOn(prismaService.customer, 'findUniqueOrThrow')
         .mockImplementation(() => {
-          throw createCustomError(
-            `Customer with ID ${nonExistentId.id} not found`,
-            HttpStatus.NOT_FOUND,
-          );
+          throw mockNotFoundError('1');
         });
 
-      await expect(service.findOne(nonExistentId)).rejects.toThrow(
-        HttpException,
-      );
-      await expect(service.findOne(nonExistentId)).rejects.toThrowError(
-        new HttpException(
-          `Customer with ID ${nonExistentId.id} not found`,
-          HttpStatus.NOT_FOUND,
-        ),
+      await expect(service.findOne({ id: '1' })).rejects.toThrow(HttpException);
+      await expect(service.findOne({ id: '1' })).rejects.toThrowError(
+        new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
       );
     });
   });
 
   describe('update', () => {
     it('should update a customer successfully', async () => {
-      const customer: Customer = {
-        id: '1',
-        name: 'John Doe',
-        phone: '924390912',
-        bi: '123456789',
-        genre: 'male',
-        address: '123 Main St',
-        email: 'john@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      const updateData: Prisma.CustomerUpdateInput = {
-        name: 'John Doe Updated',
-      };
+      jest
+        .spyOn(prismaService.customer, 'update')
+        .mockResolvedValue(mockCustomer);
 
-      jest.spyOn(prismaService.customer, 'update').mockResolvedValue(customer);
-
-      await expect(service.update({ id: '1' }, updateData)).resolves.toEqual(
-        customer,
-      );
+      await expect(
+        service.update({ id: '1' }, { name: 'John Doe Updated' }),
+      ).resolves.toEqual(mockCustomer);
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      const nonExistentId = { id: '1' };
-
-      // Simula o lançamento de uma exceção
       jest
         .spyOn(prismaService.customer, 'findUniqueOrThrow')
         .mockImplementation(() => {
-          throw createCustomError(
-            `Customer with ID ${nonExistentId.id} not found`,
-            HttpStatus.NOT_FOUND,
-          );
+          throw mockNotFoundError('1');
         });
 
-      await expect(service.findOne(nonExistentId)).rejects.toThrow(
-        HttpException,
-      );
-      await expect(service.findOne(nonExistentId)).rejects.toThrowError(
-        new HttpException(
-          `Customer with ID ${nonExistentId.id} not found`,
-          HttpStatus.NOT_FOUND,
-        ),
+      await expect(service.findOne({ id: '1' })).rejects.toThrow(HttpException);
+      await expect(service.findOne({ id: '1' })).rejects.toThrowError(
+        new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
       );
     });
   });
 
   describe('remove', () => {
     it('should delete a customer successfully', async () => {
-      const customer: Customer = {
-        id: '1',
-        name: 'John Doe',
-        phone: '924390912',
-        bi: '123456789',
-        genre: 'male',
-        address: '123 Main St',
-        email: 'john@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+      jest
+        .spyOn(prismaService.customer, 'delete')
+        .mockResolvedValue(mockCustomer);
 
-      jest.spyOn(prismaService.customer, 'delete').mockResolvedValue(customer);
-
-      await expect(service.remove({ id: '1' })).resolves.toEqual(customer);
+      await expect(service.remove({ id: '1' })).resolves.toEqual(mockCustomer);
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      const nonExistentId = { id: '1' };
-
-      // Simula o lançamento de uma exceção
       jest
         .spyOn(prismaService.customer, 'findUniqueOrThrow')
         .mockImplementation(() => {
-          throw createCustomError(
-            `Customer with ID ${nonExistentId.id} not found`,
-            HttpStatus.NOT_FOUND,
-          );
+          throw mockNotFoundError('1');
         });
 
-      await expect(service.findOne(nonExistentId)).rejects.toThrow(
-        HttpException,
-      );
-      await expect(service.findOne(nonExistentId)).rejects.toThrowError(
-        new HttpException(
-          `Customer with ID ${nonExistentId.id} not found`,
-          HttpStatus.NOT_FOUND,
-        ),
+      await expect(service.findOne({ id: '1' })).rejects.toThrow(HttpException);
+      await expect(service.findOne({ id: '1' })).rejects.toThrowError(
+        new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
       );
     });
   });
