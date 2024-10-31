@@ -66,7 +66,6 @@ describe('CustomerService', () => {
       await expect(service.create(mockCustomerData)).resolves.toEqual(
         mockCustomer,
       );
-
       expect(prismaService.customer.create).toHaveBeenCalledWith({
         data: mockCustomerData,
       });
@@ -143,8 +142,12 @@ describe('CustomerService', () => {
           throw mockNotFoundError('1');
         });
 
-      await expect(service.findOne({ id: '1' })).rejects.toThrow(HttpException);
-      await expect(service.findOne({ id: '1' })).rejects.toThrowError(
+      await expect(
+        service.update({ id: '1' }, { name: 'John Doe Updated' }),
+      ).rejects.toThrow(HttpException);
+      await expect(
+        service.update({ id: '1' }, { name: 'John Doe Updated' }),
+      ).rejects.toThrowError(
         new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
       );
     });
@@ -169,8 +172,8 @@ describe('CustomerService', () => {
           throw mockNotFoundError('1');
         });
 
-      await expect(service.findOne({ id: '1' })).rejects.toThrow(HttpException);
-      await expect(service.findOne({ id: '1' })).rejects.toThrowError(
+      await expect(service.remove({ id: '1' })).rejects.toThrow(HttpException);
+      await expect(service.remove({ id: '1' })).rejects.toThrowError(
         new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
       );
     });
