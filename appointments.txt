@@ -267,3 +267,5 @@ Trivy
 
 
   sudo docker build -t gym-app:v1 --target production .
+
+  Apos fazer o merge na branch-dev, os logs do trivy(trivy-config-results.sarif) apareceram no code scanning
