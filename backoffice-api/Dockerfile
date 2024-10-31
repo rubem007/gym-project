@@ -11,8 +11,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY --from=development /usr/src/app/node_modules ./node_modules
 COPY . .
-RUN npx prisma generate \
-    npm run build \
+RUN npx prisma generate && \
+    npm run build && \
     npm install --only=production
 
 FROM node:20-alpine AS production
