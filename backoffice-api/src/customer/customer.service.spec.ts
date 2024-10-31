@@ -53,6 +53,10 @@ describe('CustomerService', () => {
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
   describe('create', () => {
     it('should create a customer successfully', async () => {
       jest
@@ -61,6 +65,10 @@ describe('CustomerService', () => {
 
       await expect(service.create(mockCustomerData)).resolves.toEqual(
         mockCustomer,
+      );
+
+      expect(prismaService.customer.create).toHaveBeenCalledWith(
+        mockCustomerData,
       );
     });
   });
@@ -85,6 +93,12 @@ describe('CustomerService', () => {
         currentPage: pageNumber,
         totalPages: Math.ceil(totalCount / limitNumber),
       });
+
+      expect(prismaService.customer.findMany).toHaveBeenCalledWith({
+        skip: (pageNumber - 1) * limitNumber,
+        take: limitNumber,
+      });
+      expect(prismaService.customer.count).toHaveBeenCalled();
     });
   });
 
@@ -143,6 +157,9 @@ describe('CustomerService', () => {
         .mockResolvedValue(mockCustomer);
 
       await expect(service.remove({ id: '1' })).resolves.toEqual(mockCustomer);
+      expect(prismaService.customer.delete).toHaveBeenCalledWith({
+        where: { id: '1' },
+      });
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
