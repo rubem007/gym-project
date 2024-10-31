@@ -67,9 +67,9 @@ describe('CustomerService', () => {
         mockCustomer,
       );
 
-      expect(prismaService.customer.create).toHaveBeenCalledWith(
-        mockCustomerData,
-      );
+      expect(prismaService.customer.create).toHaveBeenCalledWith({
+        data: mockCustomerData,
+      });
     });
   });
 
