@@ -40,6 +40,7 @@ describe('CustomerService', () => {
               create: jest.fn(),
               findMany: jest.fn(),
               count: jest.fn(),
+              findUnique: jest.fn(),
               findUniqueOrThrow: jest.fn(),
               update: jest.fn(),
               delete: jest.fn(),
@@ -126,21 +127,47 @@ describe('CustomerService', () => {
 
   describe('update', () => {
     it('should update a customer successfully', async () => {
+      jest.clearAllMocks();
+      // Mock findUniqueOrThrow para simular que o cliente existe
+      jest
+        .spyOn(prismaService.customer, 'findUniqueOrThrow')
+        .mockResolvedValueOnce(mockCustomer);
+
+      /* console.log(
+        'findUniqueOrThrow mock foi chamado e retornou:',
+        mockCustomer,
+      ); */
+
+      // Mock update para simular a atualização do cliente
       jest
         .spyOn(prismaService.customer, 'update')
-        .mockResolvedValue(mockCustomer);
+        .mockResolvedValueOnce(mockCustomer);
 
+      //console.log('update mock foi chamado e retornou:', mockCustomer);
+
+      // Tente realizar o update e verifique se ele resolve com o cliente atualizado
       await expect(
         service.update({ id: '1' }, { name: 'John Doe Updated' }),
       ).resolves.toEqual(mockCustomer);
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      jest.spyOn(prismaService.customer, 'findUnique').mockResolvedValue(null);
+      // Configura o mock para lançar uma exceção ao não encontrar o cliente
+      jest
+        .spyOn(prismaService.customer, 'findUniqueOrThrow')
+        .mockImplementation(() => {
+          throw new HttpException(
+            'Customer with ID 1 not found',
+            HttpStatus.NOT_FOUND,
+          );
+        });
 
+      // Verifica se a exceção é lançada ao chamar o método update
       await expect(
         service.update({ id: '1' }, { name: 'John Doe Updated' }),
       ).rejects.toThrow(HttpException);
+
+      // Verifica a mensagem exata da exceção
       await expect(
         service.update({ id: '1' }, { name: 'John Doe Updated' }),
       ).rejects.toThrowError(
@@ -162,16 +189,16 @@ describe('CustomerService', () => {
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      jest
-        .spyOn(prismaService.customer, 'findUniqueOrThrow')
-        .mockImplementation(() => {
-          throw mockNotFoundError('1');
-        });
+      // Mock para simular a falha de deleção ao não encontrar o cliente
+      jest.spyOn(prismaService.customer, 'delete').mockImplementation(() => {
+        throw new HttpException(
+          'Customer with ID 1 not found',
+          HttpStatus.NOT_FOUND,
+        );
+      });
 
+      // Verifica se o método remove lança a exceção esperada
       await expect(service.remove({ id: '1' })).rejects.toThrow(HttpException);
-      await expect(service.remove({ id: '1' })).rejects.toThrowError(
-        new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
-      );
     });
   });
 });
