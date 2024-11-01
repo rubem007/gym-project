@@ -190,15 +190,22 @@ describe('CustomerService', () => {
 
     it('should throw a NotFound error if customer does not exist', async () => {
       // Mock para simular a falha de deleção ao não encontrar o cliente
-      jest.spyOn(prismaService.customer, 'delete').mockImplementation(() => {
-        throw new HttpException(
-          'Customer with ID 1 not found',
-          HttpStatus.NOT_FOUND,
+      jest
+        .spyOn(prismaService.customer, 'delete')
+        .mockRejectedValue(
+          new HttpException(
+            'Customer with ID 1 not found',
+            HttpStatus.NOT_FOUND,
+          ),
         );
-      });
 
       // Verifica se o método remove lança a exceção esperada
       await expect(service.remove({ id: '1' })).rejects.toThrow(HttpException);
+
+      // Verifica a mensagem e status exato da exceção
+      await expect(service.remove({ id: '1' })).rejects.toThrowError(
+        new HttpException('Customer with ID 1 not found', HttpStatus.NOT_FOUND),
+      );
     });
   });
 });
