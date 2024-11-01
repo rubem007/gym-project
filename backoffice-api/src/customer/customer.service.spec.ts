@@ -136,11 +136,7 @@ describe('CustomerService', () => {
     });
 
     it('should throw a NotFound error if customer does not exist', async () => {
-      jest
-        .spyOn(prismaService.customer, 'findUniqueOrThrow')
-        .mockImplementation(() => {
-          throw mockNotFoundError('1');
-        });
+      jest.spyOn(prismaService.customer, 'findUnique').mockResolvedValue(null);
 
       await expect(
         service.update({ id: '1' }, { name: 'John Doe Updated' }),
