@@ -58,23 +58,15 @@ export class CustomerService {
     id: Prisma.CustomerWhereUniqueInput,
     data: Prisma.CustomerUpdateInput,
   ): Promise<Customer> {
-    const existingCustomer = await this.prisma.customer.findUnique({
+    const existingCustomer = await this.prisma.customer.findUniqueOrThrow({
       where: id,
     });
 
-    if (!existingCustomer) {
-      throw createCustomError(
-        `Customer with ID ${id.id} not found`,
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    const updateCustomer = await this.prisma.customer.update({
+    // Atualiza o cliente
+    return this.prisma.customer.update({
       where: id,
       data,
     });
-
-    return updateCustomer;
   }
 
   async remove(id: Prisma.CustomerWhereUniqueInput): Promise<Customer> {
