@@ -58,7 +58,7 @@ export class CustomerService {
     id: Prisma.CustomerWhereUniqueInput,
     data: Prisma.CustomerUpdateInput,
   ): Promise<Customer> {
-    const existingCustomer = await this.prisma.customer.findUniqueOrThrow({
+    await this.prisma.customer.findUniqueOrThrow({
       where: id,
     });
 
