@@ -54,7 +54,7 @@ jobs:
         working-directory: ./backoffice-api
 
       - name: Run end-to-end tests
-        uses: run-e2e-tests.yaml
+        uses: ./../.github/workflows/run-e2e-tests.yaml
         with:
           working-directory: ./backoffice-api
       
