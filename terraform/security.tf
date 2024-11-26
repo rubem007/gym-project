@@ -27,8 +27,8 @@ resource "aws_security_group" "gym_sg_api" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    cidr_blocks      = ["105.172.7.157"]
+    ipv6_cidr_blocks = ["2c0f:f888:a980:2e1e:553e:fb69:7e0:c74"]
   }
 
   egress {
