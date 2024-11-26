@@ -37,6 +37,52 @@ jobs:
       
   #     - name: Display SARIF ID
   #       run: echo "The SARIF ID is ${{ steps.upload-sarif.outputs.sarif-id }}"
+  
+  # run-e2e-test:
+  #   name: Run End-to-End Tests
+  #   uses: rubem007/gym-project/.github/workflows/run-e2e-tests.yaml@branch-dev
+
+  run-tests:
+    runs-on: ubuntu-latest
+    services:
+        db:
+          image: mysql:8.0
+          ports:
+            - 3306:3306
+          options: >-
+            --health-cmd="mysqladmin ping --silent"
+            --health-interval=10s
+            --health-timeout=5s
+            --health-retries=3
+          env:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: gym_db
+            MYSQL_USER: rdn
+            MYSQL_PASSWORD: rdn007
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./backoffice-api
+
+      - name: Wait for DB to be ready
+        run: |
+          until mysqladmin ping -h"127.0.0.1" -u"rdn" -p"rdn007" --silent; do
+            echo "Waiting for database connection..."
+            sleep 2
+          done
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+        working-directory: ./backoffice-api
 
   check-application:
     runs-on: ubuntu-latest
@@ -53,10 +99,10 @@ jobs:
         run: npm install
         working-directory: ./backoffice-api
 
-      - name: Run end-to-end tests
-        uses: ./gym-project/.github/workflows/run-e2e-tests.yaml@branch-dev
-        with:
-          working-directory: ./backoffice-api
+      # - name: Run end-to-end tests
+      #   uses: rubem007/gym-project/.github/workflows/run-e2e-tests.yaml@branch-dev
+      #   with:
+      #     working-directory: ./backoffice-api
       
       - name: Run tests units
         run: npm run test:cov
