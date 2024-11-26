@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Customer } from '@prisma/client';
-import { createCustomError } from 'src/common/utils/response-handler';
+import { createCustomError } from '../common/utils/response-handler';
 
 @Injectable()
 export class CustomerService {
@@ -58,19 +58,15 @@ export class CustomerService {
     id: Prisma.CustomerWhereUniqueInput,
     data: Prisma.CustomerUpdateInput,
   ): Promise<Customer> {
-    try {
-      const updateCustomer = await this.prisma.customer.update({
-        where: id,
-        data,
-      });
+    await this.prisma.customer.findUniqueOrThrow({
+      where: id,
+    });
 
-      return updateCustomer;
-    } catch (error) {
-      throw createCustomError(
-        `Customer with ID ${id.id} not found`,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // Atualiza o cliente
+    return this.prisma.customer.update({
+      where: id,
+      data,
+    });
   }
 
   async remove(id: Prisma.CustomerWhereUniqueInput): Promise<Customer> {

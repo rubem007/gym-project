@@ -28,5 +28,6 @@ services:
     environment:
       - MYSQL_DATABASE=gym_db
       - MYSQL_USER=rdn
+      - MYSQL_ROOT_PASSWORD=rdn007
     volumes:
       - ./mysql_data:/var/lib/mysql
