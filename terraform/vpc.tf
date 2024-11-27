@@ -36,28 +36,28 @@ resource "aws_internet_gateway" "gym_igw" {
 }
 
 # PUBLIC IP
-resource "aws_eip" "gym_nat_eip" {
+# resource "aws_eip" "gym_nat_eip" {
 
-  depends_on = [aws_internet_gateway.gym_igw]
+#   depends_on = [aws_internet_gateway.gym_igw]
 
-  tags = {
-    Name = "gym-nat-eip"
-  }
-}
+#   tags = {
+#     Name = "gym-nat-eip"
+#   }
+# }
 
-# 4 - Create Nat Gateway and associate a subnet
-resource "aws_nat_gateway" "gym_nat_gtw" {
-  allocation_id = aws_eip.gym_nat_eip.id
-  subnet_id     = aws_subnet.gym_subnet_public.id
+# # 4 - Create Nat Gateway and associate a subnet
+# resource "aws_nat_gateway" "gym_nat_gtw" {
+#   allocation_id = aws_eip.gym_nat_eip.id
+#   subnet_id     = aws_subnet.gym_subnet_public.id
 
-  tags = {
-    Name = "gym-nat-gtw"
-  }
+#   tags = {
+#     Name = "gym-nat-gtw"
+#   }
 
-  # To ensure proper ordering, it is recommended to add an explicit dependency
-  # on the Internet Gateway for the VPC.
-  depends_on = [aws_internet_gateway.gym_igw]
-}
+#   # To ensure proper ordering, it is recommended to add an explicit dependency
+#   # on the Internet Gateway for the VPC.
+#   depends_on = [aws_internet_gateway.gym_igw]
+# }
 
 # 5 - Create Route table for public subnet
 resource "aws_route_table" "gym_rt_public" {
@@ -79,20 +79,20 @@ resource "aws_route_table_association" "gym_rt_public_a" {
 }
 
 # 5.1 - Create Route table for private subnet
-resource "aws_route_table" "gym_rt_private" {
-  vpc_id = aws_vpc.gym_vpc.id
+# resource "aws_route_table" "gym_rt_private" {
+#   vpc_id = aws_vpc.gym_vpc.id
 
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.gym_nat_gtw.id
-  }
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.gym_nat_gtw.id
+#   }
 
-  tags = {
-    Name = "gym-rt-private"
-  }
-}
+#   tags = {
+#     Name = "gym-rt-private"
+#   }
+# }
 
-resource "aws_route_table_association" "gym_rt_private_a" {
-  subnet_id      = aws_subnet.gym_subnet_private.id
-  route_table_id = aws_route_table.gym_rt_private.id
-}
+# resource "aws_route_table_association" "gym_rt_private_a" {
+#   subnet_id      = aws_subnet.gym_subnet_private.id
+#   route_table_id = aws_route_table.gym_rt_private.id
+# }

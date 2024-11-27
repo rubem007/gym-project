@@ -1,9 +1,14 @@
 name: ci-workflow
 
+# on:
+#   pull_request:
+#     branches:
+#       - branch-dev
+
 on:
-  pull_request:
-    branches:
-      - branch-dev
+  push:
+    paths:
+      - "backoffice-api/"
   
   workflow_dispatch:
 

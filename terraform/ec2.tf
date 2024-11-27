@@ -8,32 +8,32 @@ resource "aws_key_pair" "gym_key_pair" {
   public_key = file("~/.ssh/id_rsa.pub")
 }
 
-resource "aws_instance" "ec2_api" {
-  ami                         = "ami-0e86e20dae9224db8"
-  instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.gym_subnet_public.id
-  associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.gym_sg_api.id]
-  key_name                    = aws_key_pair.gym_key_pair.key_name
-  #user_data = file("./docker-install.sh")
+# resource "aws_instance" "ec2_api" {
+#   ami                         = "ami-0e86e20dae9224db8"
+#   instance_type               = "t2.micro"
+#   subnet_id                   = aws_subnet.gym_subnet_public.id
+#   associate_public_ip_address = true
+#   vpc_security_group_ids      = [aws_security_group.gym_sg_api.id]
+#   key_name                    = aws_key_pair.gym_key_pair.key_name
+#   #user_data = file("./docker-install.sh")
 
-  tags = {
-    Name = "ec2-api"
-  }
-}
+#   tags = {
+#     Name = "ec2-api"
+#   }
+# }
 
-resource "aws_instance" "ec2_db" {
-  ami                    = "ami-0e86e20dae9224db8"
-  instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.gym_subnet_private.id
-  vpc_security_group_ids = [aws_security_group.gym_sg_db.id]
-  key_name               = aws_key_pair.gym_key_pair.key_name
-  #user_data = file("./docker-install.sh")
+# resource "aws_instance" "ec2_db" {
+#   ami                    = "ami-0e86e20dae9224db8"
+#   instance_type          = "t2.micro"
+#   subnet_id              = aws_subnet.gym_subnet_private.id
+#   vpc_security_group_ids = [aws_security_group.gym_sg_db.id]
+#   key_name               = aws_key_pair.gym_key_pair.key_name
+#   #user_data = file("./docker-install.sh")
 
-  tags = {
-    Name = "ec2-db"
-  }
-}
+#   tags = {
+#     Name = "ec2-db"
+#   }
+# }
 
 resource "aws_instance" "ec2_jenkins" {
   ami                         = "ami-0e86e20dae9224db8"
@@ -49,13 +49,13 @@ resource "aws_instance" "ec2_jenkins" {
   }
 }
 
-output "ip_api" {
-  value = aws_instance.ec2_api.public_ip
-}
+# output "ip_api" {
+#   value = aws_instance.ec2_api.public_ip
+# }
 
-output "ip_db" {
-  value = aws_instance.ec2_db.private_ip
-}
+# output "ip_db" {
+#   value = aws_instance.ec2_db.private_ip
+# }
 
 output "ip_jenkins" {
   value = aws_instance.ec2_jenkins.public_ip
