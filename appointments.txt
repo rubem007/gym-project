@@ -197,6 +197,9 @@ Configure pipeline on jenkins
         kubernetes CLI
         SonarQube Scanner
         Nodejs
+    Install Tools
+        NodeJS
+        SonarQube Scanner
 
 A pipeline no jenkins é criada usando a linguagem Groovy
 ________________________________________________________________________________________________
