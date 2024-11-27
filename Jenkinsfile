@@ -15,7 +15,7 @@ pipeline {
 
         steps {
                 
-                withSonarQubeEnv('server-sonar') {
+                withSonarQubeEnv('sonar-server') {
                     sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
         
         // stage('Scan') {
         //     steps {
-        //         withSonarQubeEnv(installationName: 'server-sonar') {
+        //         withSonarQubeEnv(installationName: 'sonar-server') {
         //             sh '''
         //                 sonar-scanner \
         //                 -Dsonar.projectKey=rubem007_gym-project \
