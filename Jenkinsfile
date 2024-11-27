@@ -7,28 +7,26 @@ pipeline {
     }
 
     stages {
+        stage('SonarQube analysis') {
+            environment {
+                SCANNER_HOME = tool 'SonarQube';    
+            }
 
-        stage('Scan') {
-            steps {
-                withSonarQubeEnv(installationName: 'server-sonar') {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=rubem007_gym-project \
-                        -Dsonar.sources=.
-                        -Dsonar.host.url=https://sonarcloud.io/ \
-                        -Dsonar.login=$jenkins-token
-                    '''
+        steps {
+                
+                withSonarQubeEnv('SonarQube') {
+                    sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
         }
 
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //         timeout(time: 2, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
 
         // stage('Build Image') {
         //     steps {

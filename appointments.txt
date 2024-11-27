@@ -152,7 +152,7 @@ terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource espe
 Access EC2
 EC2 API:    ssh ubuntu@54.90.42.60
 EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.59
-EC2 Jenkins:     ssh ubuntu@35.168.16.53
+EC2 Jenkins:     ssh ubuntu@3.238.139.192
 
 Copy file from local host to remote host
     scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa
@@ -185,7 +185,7 @@ Instal kubectl
     sudo apt-get install -y kubectl
 
 Access jenkins
-    35.168.16.53:8080
+    3.238.139.192:8080
 
 Run this command to view the administrator password
     cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -196,6 +196,7 @@ Configure pipeline on jenkins
         docker pipeline
         kubernetes CLI
         SonarQube Scanner
+        Nodejs
 
 A pipeline no jenkins é criada usando a linguagem Groovy
 ________________________________________________________________________________________________
@@ -203,6 +204,8 @@ Ansible
 
 Comandos
 ansible localhost -m ping 
+
+ansible all -i '35.168.16.53,' -m ansible.builtin.shell -a "reboot" --private-key=~/.ssh/id_rsa -u ubuntu --become
 
 ansible all -i '3.239.118.82,' -m ping --private-key=~/.ssh/id_rsa -u root
 
