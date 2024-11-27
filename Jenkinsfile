@@ -6,26 +6,35 @@ pipeline {
     }
 
     stages {
-        stage('Build Image') {
+        stage('test') {
             steps {
-                script {
-                    dockerapp = docker.build("${IMAGE_NAME}:${env.BUILD_ID}",
-                                '-f ./backoffice-api/Dockerfile ./backoffice-api')
-
-                }
-            }
-        }
-
-        stage('Push Image') {
-            steps {
-                script {
-                    
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerapp.push("${env.BUILD_ID}")
-                        dockerapp.push('latest')
-                    }
-                }
+                sh 'echo "Only Test"'
             }
         }
     }
+
+
+    // stages {
+    //     stage('Build Image') {
+    //         steps {
+    //             script {
+    //                 dockerapp = docker.build("${IMAGE_NAME}:${env.BUILD_ID}",
+    //                             '-f ./backoffice-api/Dockerfile ./backoffice-api')
+
+    //             }
+    //         }
+    //     }
+
+    //     stage('Push Image') {
+    //         steps {
+    //             script {
+                    
+    //                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+    //                     dockerapp.push("${env.BUILD_ID}")
+    //                     dockerapp.push('latest')
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
