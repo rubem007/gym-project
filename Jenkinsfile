@@ -7,6 +7,7 @@ pipeline {
     }
 
     stages {
+
         stage('SonarQube analysis') {
             environment {
                 SCANNER_HOME = tool 'SonarQube';    
@@ -14,11 +15,25 @@ pipeline {
 
         steps {
                 
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('sonar-server') {
                     sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
         }
+        
+        // stage('Scan') {
+        //     steps {
+        //         withSonarQubeEnv(installationName: 'server-sonar') {
+        //             sh '''
+        //                 sonar-scanner \
+        //                 -Dsonar.projectKey=rubem007_gym-project \
+        //                 -Dsonar.sources=.
+        //                 -Dsonar.host.url=https://sonarcloud.io/ \
+        //                 -Dsonar.login=$jenkins-token
+        //             '''
+        //         }
+        //     }
+        // }
 
         // stage('Quality Gate') {
         //     steps {
