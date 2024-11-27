@@ -20,28 +20,14 @@ pipeline {
                 }
             }
         }
-        
-        // stage('Scan') {
-        //     steps {
-        //         withSonarQubeEnv(installationName: 'sonar-server') {
-        //             sh '''
-        //                 sonar-scanner \
-        //                 -Dsonar.projectKey=rubem007_gym-project \
-        //                 -Dsonar.sources=.
-        //                 -Dsonar.host.url=https://sonarcloud.io/ \
-        //                 -Dsonar.login=$jenkins-token
-        //             '''
-        //         }
-        //     }
-        // }
 
-        // stage('Quality Gate') {
-        //     steps {
-        //         timeout(time: 2, unit: 'MINUTES') {
-        //             waitForQualityGate abortPipeline: true
-        //         }
-        //     }
-        // }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
         // stage('Build Image') {
         //     steps {

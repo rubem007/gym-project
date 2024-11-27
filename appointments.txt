@@ -152,7 +152,7 @@ terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource espe
 Access EC2
 EC2 API:    ssh ubuntu@54.90.42.60
 EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.59
-EC2 Jenkins:     ssh ubuntu@3.238.139.192
+EC2 Jenkins:     ssh ubuntu@34.204.168.171
 
 Copy file from local host to remote host
     scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa
@@ -185,10 +185,10 @@ Instal kubectl
     sudo apt-get install -y kubectl
 
 Access jenkins
-    3.238.139.192:8080
+    34.204.168.171:8080
 
 Run this command to view the administrator password
-    cat /var/lib/jenkins/secrets/initialAdminPassword
+    sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 Configure pipeline on jenkins
     Add plugins
@@ -197,9 +197,14 @@ Configure pipeline on jenkins
         kubernetes CLI
         SonarQube Scanner
         Nodejs
-    Install Tools
+    System Configure
+        SonarQube servers
+            sonar-server
+            https://sonarcloud.io/
+            sonarqube Jenkins token
+    Install Tools -> caso nao esteja a usar o java/maven
         NodeJS
-        SonarQube Scanner
+        SonarQubeScanner
 
 A pipeline no jenkins é criada usando a linguagem Groovy
 ________________________________________________________________________________________________
