@@ -115,8 +115,8 @@ git branch -d {nome_branch}
 git pull origin ci
 
 git branch --list
-git branch -d feat/config - elimina a branch localmente
-git push origin --delete feat/config - eliminar branch remota
+git branch -d ci - elimina a branch localmente
+git push origin --delete ci - eliminar branch remota
 _____________________________________________________________________________________
 AWS commands
   aws configure list
@@ -195,6 +195,7 @@ Configure pipeline on jenkins
         docker
         docker pipeline
         kubernetes CLI
+        SonarQube Scanner
 
 A pipeline no jenkins é criada usando a linguagem Groovy
 ________________________________________________________________________________________________
