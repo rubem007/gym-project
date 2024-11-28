@@ -37,7 +37,7 @@ resource "aws_key_pair" "gym_key_pair" {
 
 resource "aws_instance" "ec2_jenkins" {
   ami                         = "ami-0866a3c8686eaeeba" # versao paga
-  instance_type               = "t2.large"
+  instance_type               = "m5ad.large" # 0.107usd/hour
   subnet_id                   = aws_subnet.gym_subnet_public.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.gym_sg_jenkins.id]

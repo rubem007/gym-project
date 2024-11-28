@@ -1,5 +1,5 @@
 [all]
-ec2_jenkins ansible_host=52.3.240.101
+ec2_jenkins ansible_host=54.81.111.63
 
 [jenkins]
 ec2_jenkins

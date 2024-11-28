@@ -1,0 +1,30 @@
+---
+- name: Install Trivy on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - apt-transport-https
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Add Trivy public key
+      shell: wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
+
+    - name: Add Trivy repository
+      shell: |
+        echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/trivy.list
+
+    - name: Update package index
+      apt:
+        update_cache: yes
+
+    - name: Install Trivy
+      apt:
+        name: trivy
+        state: present

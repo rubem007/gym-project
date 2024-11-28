@@ -147,12 +147,12 @@ terraform apply -auto-approve — Apply changes without having to interactively 
 terraform fmt - formata o código
 terraform plan - mostra o plano de execução
 terraform destroy - elimina todos os resources
-terraform destroy -target=digitalocean_droplet.jenkins - elimina o resource específico
+terraform destroy -target=aws_instance.ec2_jenkins - elimina o resource específico
 
 Access EC2
 EC2 API:    ssh ubuntu@54.90.42.60
 EC2 DB:     ssh -i ~/.ssh/gym-key-pair ubuntu@10.0.1.59
-EC2 Jenkins:     ssh ubuntu@52.3.240.101
+EC2 Jenkins:     ssh ubuntu@54.81.111.63
 
 Copy file from local host to remote host
     scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa
@@ -185,12 +185,15 @@ Instal kubectl
     sudo apt-get install -y kubectl
 
 Access jenkins
-    52.3.240.101:8080
+    54.81.111.63:8080
 
 Run this command to view the administrator password
     sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 Configure pipeline on jenkins
+    Add Credentials
+        dockerhub Jenkins token
+        sonarqube Jenkins token
     Add plugins
         docker
         docker pipeline
@@ -198,9 +201,13 @@ Configure pipeline on jenkins
         SonarQube Scanner
         Nodejs
     System Configure
+        Global properties
+            Environment variables
+                trivy
+                /usr/bin:/usr/bin/trivy:/bin:/usr/local/bin:/usr/sbin:/usr/local/sbin
         SonarQube servers
             sonar-server
-            https://sonarcloud.io/
+            https://sonarcloud.io
             sonarqube Jenkins token
     Install Tools -> caso nao esteja a usar o java/maven
         NodeJS
@@ -234,7 +241,7 @@ ansible-playbook -i hosts playbook.yaml - executa o arquivo yaml playbook
 ansible-playbook -i hosts playbook.yaml --ask-become-pass - executa o arquivo yaml playbook. Usa-se quando o remote_user não é o root
 
 
-ansible-playbook -i hosts install_jenkins.yml install_docker.yml install_kubectl.yml
+ansible-playbook -i hosts install_jenkins.yml install_docker.yml install_kubectl.yml install_trivy.yml
 ansible-playbook -i hosts install_kubectl.yml
 
 Criar user no linux
