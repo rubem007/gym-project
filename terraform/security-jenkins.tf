@@ -35,8 +35,8 @@ resource "aws_security_group" "gym_sg_jenkins" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["105.172.71.143/32"]
-    ipv6_cidr_blocks = ["2c0f:f888:a980:2e1e:c945:a94f:5e77:d284/128"]
+    cidr_blocks      = ["105.172.136.118/32"]
+    ipv6_cidr_blocks = ["2c0f:f888:a980:22a7:8dec:5bfb:c666:d708/128"]
   }
 
   egress {

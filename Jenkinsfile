@@ -29,6 +29,12 @@ pipeline {
             }
         }
 
+        stage('Scan') {
+            steps {
+                sh "trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL,MEDIUM ${IMAGE_NAME}:${env.BUILD_ID}"
+            }
+        }
+
         // stage('Build Image') {
         //     steps {
         //         script {
