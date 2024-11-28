@@ -42,7 +42,10 @@ resource "aws_instance" "ec2_jenkins" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.gym_sg_jenkins.id]
   key_name                    = aws_key_pair.gym_key_pair.key_name
-  #user_data = file("./docker-install.sh")
+
+  root_block_device {
+    volume_size = 50 # Novo tamanho em GB
+  }
 
   tags = {
     Name = "ec2-jenkins"
