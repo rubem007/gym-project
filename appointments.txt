@@ -206,6 +206,8 @@ Configure pipeline on jenkins
         NodeJS
         SonarQubeScanner
 
+/usr/bin/trivy
+
 A pipeline no jenkins é criada usando a linguagem Groovy
 ________________________________________________________________________________________________
 Ansible
@@ -275,7 +277,7 @@ Trivy
   trivy fs . -> scan the current directory
   trivy repo url-repository -> scan the repository
   trivy fs --scanners misconfig . -> scan the configuration problem (like dockerfile, terraform)
-  trivy image gym-app:v1 -> scan the image
+  trivy image rubemnascimento81/gym-app:5 -> scan the image
   trivy image --scanners vuln rubemnascimento81/gym-app:latest
 
 
