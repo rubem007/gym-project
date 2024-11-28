@@ -109,11 +109,10 @@ git checkout main
 git merge auth
 git push origin main
 
-Deletar uma branch local
-git branch -d {nome_branch} 
-
-git pull origin ci
+git checkout -b "appoint"
 git branch branch-dev
+git pull
+
 git branch --list
 git branch -d ci - elimina a branch localmente
 git push origin --delete ci - eliminar branch remota
