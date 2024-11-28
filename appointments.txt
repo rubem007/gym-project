@@ -157,6 +157,13 @@ EC2 Jenkins:     ssh ubuntu@54.81.111.63
 Copy file from local host to remote host
     scp ~/.ssh/id_rsa ubuntu@44.200.193.130:/home/ubuntu/.ssh/id_rsa
 
+Verificar partições: lsblk
+Verificar espaço em disco: df -h
+Verificar o tipo de disco: df -T ou df -T /
+Verificar espaço em um diretório específico: df -h /var/lib/jenkins
+Expandir o volume ext4: 
+    sudo growpart /dev/nvme0n1 1
+    sudo resize2fs /dev/nvme0n1p1
 _____________________________________________________________________________________
 Jenkins
 
