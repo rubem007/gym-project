@@ -29,32 +29,32 @@ pipeline {
             }
         }
 
+        stage('Build Image') {
+            steps {
+                script {
+                    dockerapp = docker.build("${IMAGE_NAME}:${env.BUILD_ID}",
+                                '-f ./backoffice-api/Dockerfile ./backoffice-api')
+
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                script {
+                    
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        dockerapp.push("${env.BUILD_ID}")
+                        dockerapp.push('latest')
+                    }
+                }
+            }
+        }
+
         stage('Scan') {
             steps {
                 sh "trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL,MEDIUM ${IMAGE_NAME}:${env.BUILD_ID}"
             }
         }
-
-        // stage('Build Image') {
-        //     steps {
-        //         script {
-        //             dockerapp = docker.build("${IMAGE_NAME}:${env.BUILD_ID}",
-        //                         '-f ./backoffice-api/Dockerfile ./backoffice-api')
-
-        //         }
-        //     }
-        // }
-
-        // stage('Push Image') {
-        //     steps {
-        //         script {
-                    
-        //             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-        //                 dockerapp.push("${env.BUILD_ID}")
-        //                 dockerapp.push('latest')
-        //             }
-        //         }
-        //     }
-        // }
     }
 }
