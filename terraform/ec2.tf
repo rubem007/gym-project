@@ -44,7 +44,7 @@ resource "aws_instance" "ec2_jenkins" {
   key_name                    = aws_key_pair.gym_key_pair.key_name
 
   root_block_device {
-    volume_size = 50 # Novo tamanho em GB
+    volume_size = 50 # tamanho do diretório /
   }
 
   tags = {
